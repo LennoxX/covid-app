@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-success">
+      <div class="box-header with-border">
+        <h3 class="box-title">Covid-19 no Brasil - {{relatorioAtual?.state}}. Atualizado em {{relatorioAtual?.datetime | date: 'dd/MM/yyyy HH:mm:ss'}}</h3>
+
+
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body no-padding">
+        <div class="col-md-9">
+          <app-mapa></app-mapa>
+        </div>
+        <div class="col-md-3">
+
+          <div class="info-box bg-green">
+            <span class="info-box-icon"><i class="fa fa-check-circle-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Casos Confirmados</span>
+              <span class="info-box-number">{{relatorioAtual?.cases}}</span>
+
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <div class="info-box bg-yellow">
+            <span class="info-box-icon"><i class="fa fa-question-circle"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Suspeitas</span>
+              <span class="info-box-number">{{relatorioAtual?.suspects}}</span>
+
+
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="fa fa-times-circle-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Rejeitados</span>
+              <span class="info-box-number">{{relatorioAtual?.refuses}}</span>
+
+
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <div class="info-box bg-red-active">
+            <span class="info-box-icon"><i class="fa fa-user-times"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Mortes</span>
+              <span class="info-box-number">{{relatorioAtual?.deaths}}</span>
+
+
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+
+
+
+
+        </div>
+      </div>
+      <!-- /.box-body -->
+      <div *ngIf="loading" class="overlay">
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+    </div>
+  </div>
+</div>
