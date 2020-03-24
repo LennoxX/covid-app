@@ -13,58 +13,13 @@ import { Page } from "./../models/page";
 export class BaseResourceService<T extends BaseResourceModel> {
   protected http: HttpClient;
   protected configService: ConfigService = new ConfigService();
-  private res: Response<T> = new Response();
+  private res: T;
 
-  constructor(protected apiPath: string, protected injector: Injector) {
+  constructor(protected injector: Injector) {
     this.http = injector.get(HttpClient);
   }
 
-  getAll(): Observable<T[]> {
-    const url = `${this.configService.getUrlService()}${this.apiPath}`;
-    return this.http
-      .get(url)
-      .pipe(catchError(this.handleError), map(this.jsonDataToResources));
-  }
 
-  findAll(page: number, count: number): Observable<Page<T>> {
-    const url = `${this.configService.getUrlService()}${
-      this.apiPath
-    }/${page}/${count}`;
-    return this.http
-      .get(url)
-      .pipe(catchError(this.handleError), map(this.jsonDataPagesToResources));
-  }
-
-  getById(id: number): Observable<T> {
-    const url = `${this.configService.getUrlService()}brazil/uf/${id}`;
-    return this.http
-      .get(url)
-      .pipe(catchError(this.handleError), map(this.jsonDataToResource));
-  }
-
-  create(resource: T): Observable<T> {
-    const url = `${this.configService.getUrlService()}${this.apiPath}`;
-    this.res.data = resource;
-    return this.http
-      .post(url, this.res.data)
-      .pipe(catchError(this.handleError), map(this.jsonDataToResource));
-  }
-
-  update(resource: T): Observable<T> {
-    this.res.data = resource;
-    const url = `${this.configService.getUrlService()}${this.apiPath}`;
-    return this.http
-      .put(url, this.res.data)
-      .pipe(catchError(this.handleError), map(this.jsonDataToResource));
-  }
-
-  delete(id: number): Observable<any> {
-    const url = `${this.configService.getUrlService()}${this.apiPath}/${id}`;
-    return this.http.delete(url).pipe(
-      catchError(this.handleError),
-      map(() => null)
-    );
-  }
 
   // Metodos Protegidos
   protected jsonDataToResources(jsonData: Response<T[]>): T[] {
@@ -76,14 +31,8 @@ export class BaseResourceService<T extends BaseResourceModel> {
     return resources;
   }
 
-  protected jsonDataPagesToResources(jsonData: Response<Page<T>>): Page<T> {
-    const resources = Object.assign(new Response(), jsonData.data);
-    return resources;
-  }
-
-  protected jsonDataToResource(jsonData: Response<T>): T {
-    console.log(jsonData);
-    const resource = Object.assign(new Response(), jsonData.data);
+  protected jsonDataToResource(jsonData: T): T {
+    const resource = Object.assign(new Response(), jsonData);
     return resource;
   }
 

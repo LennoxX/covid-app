@@ -77,7 +77,7 @@ export class EstadoComponent implements AfterContentChecked {
     this.selecionado = this.estados.find(element => (element.id = this.estado));
     this.changeSelecionado();
     this.paintMap();
-    this.relatorioService.getById(this.selecionado.id).subscribe(
+    this.relatorioService.getByUf(this.selecionado.id).subscribe(
       resource => {
         this.relatorioAtual = resource;
         this.loading = false;

@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +24,7 @@
     "@angular/router": "~9.0.0",
     "admin-lte": "^2.4.15",
     "chart.js": "^2.9.2",
+    "moment": "^2.24.0",
     "ngx-loading": "^8.0.0",
     "ngx-mask": "^8.1.7",
     "ngx-toastr": "^10.0.4",
