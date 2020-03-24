@@ -8,6 +8,7 @@ import { Component, OnInit } from "@angular/core";
 export class HomeComponent implements OnInit {
   estados = [
     { id: "to", selecionado: false, circle: false },
+    { id: "to", selecionado: false, circle: false },
     { id: "ba", selecionado: false, circle: false },
     { id: "se", selecionado: false, circle: true },
     { id: "pe", selecionado: false, circle: false },

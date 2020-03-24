@@ -1,16 +1,20 @@
-import { Component, Injector, OnInit } from "@angular/core";
+import {
+  Component,
+  Injector,
+  OnInit,
+  AfterContentChecked
+} from "@angular/core";
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { RelatorioService } from "../shared/services/relatorio.service";
 import { Relatorio } from "../shared/model/relatorio.model";
-import { ToastrService } from 'ngx-toastr';
-
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-estado",
   templateUrl: "./estado.component.html",
   styleUrls: ["./estado.component.css"]
 })
-export class EstadoComponent implements OnInit {
+export class EstadoComponent implements AfterContentChecked {
   protected route: ActivatedRoute;
   loading = false;
   selecionado;
@@ -62,21 +66,27 @@ export class EstadoComponent implements OnInit {
       }
     });
   }
-  ngOnInit(): void {}
+
+
+  ngAfterContentChecked(): void {
+    this.paintMap();
+  }
 
   verificaEstado() {
     this.route.paramMap.subscribe(params => (this.estado = params.get("uf")));
     this.selecionado = this.estados.find(element => (element.id = this.estado));
     this.changeSelecionado();
     this.paintMap();
-    this.relatorioService.getById(this.selecionado.id).subscribe(resource => {
-      this.relatorioAtual = resource;
-      console.log(this.relatorioAtual.datetime)
-      this.loading = false;
-    }, err => {
-      this.toastrService.error('Falha na comunicação com a API!', 'Atenção!');
-      this.loading = false;
-    });
+    this.relatorioService.getById(this.selecionado.id).subscribe(
+      resource => {
+        this.relatorioAtual = resource;
+        this.loading = false;
+      },
+      err => {
+        this.toastrService.error("Falha na comunicação com a API!", "Atenção!");
+        this.loading = false;
+      }
+    );
   }
   paintMap() {
     this.estados.forEach(estado => {
